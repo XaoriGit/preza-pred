@@ -1,1105 +1,1263 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Realm Relics — Тёмная Атрибутика</title>
-
-<!-- Reveal.js -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/theme/black.min.css">
-
-<!-- Google Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&family=MedievalSharp&display=swap" rel="stylesheet">
-
-<!-- Material Symbols -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
-
-<style>
-  :root {
-    --void: #04030a;
-    --abyss: #080612;
-    --shadow: #100d1c;
-    --dusk: #1a1428;
-    --stone: #2a2240;
-    --silver: #a89fc0;
-    --moonstone: #c8bedd;
-    --gold: #c9a84c;
-    --gold-bright: #f0c060;
-    --blood: #7a0b0b;
-    --crimson: #9b1818;
-    --ember: #c42b2b;
-    --rune: #5a3fa0;
-    --arcane: #7b5cc0;
-    --frost: #4a7fa5;
-    --font-title: 'Cinzel Decorative', serif;
-    --font-heading: 'Cinzel', serif;
-    --font-body: 'IM Fell English', serif;
-  }
-
-  /* ===== BASE ===== */
-  .reveal-viewport { background: var(--void) !important; }
-
-  .reveal { font-family: var(--font-body); color: var(--moonstone); }
-
-  .reveal .slides section {
-  
-    display: grid !important;
-    grid-template-areas: "stack";
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr;
-    padding: 0 !important;
-    overflow: hidden;
-  }
-
-  .reveal p{
-    margin: 10px;
-  }
-
-  /* ===== BACKGROUNDS ===== */
-  .bg-layer {
-    grid-area: stack;
-    width: 100%; height: 100%;
-    pointer-events: none;
-    align-self: stretch; justify-self: stretch;
-  }
-
-  .noise-overlay {
-    grid-area: stack;
-    width: 100%; height: 100%;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-    background-size: 200px 200px;
-    opacity: 0.4;
-    pointer-events: none;
-    mix-blend-mode: overlay;
-    align-self: stretch; justify-self: stretch;
-  }
-
-  .vignette {
-    grid-area: stack;
-    width: 100%; height: 100%;
-    background: radial-gradient(ellipse at center, transparent 30%, rgba(4,3,10,0.85) 100%);
-    pointer-events: none;
-    align-self: stretch; justify-self: stretch;
-  }
-
-  /* ===== DIVIDERS ===== */
-  .rune-divider {
-    display: flex; align-items: center; gap: 16px;
-    margin: 12px auto;
-    width: 100%;
-    max-width: 600px;
-  }
-  .rune-divider::before, .rune-divider::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(to right, transparent, var(--gold) 60%, transparent);
-  }
-  .rune-divider span { color: var(--gold); font-size: 18px; opacity: 0.8; }
-
-  /* ===== SLIDE CONTENT WRAPPER ===== */
-  .slide-inner {
-    grid-area: stack;
-    width: 100%; height: 100%;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    padding: 40px 60px;
-    box-sizing: border-box;
-  }
-
-  /* ===== TYPOGRAPHY ===== */
-  .title-main {
-    font-family: var(--font-title);
-    font-size: clamp(2.2rem, 6vw, 4.5rem);
-    font-weight: 900;
-    color: var(--gold);
-    text-align: center;
-    line-height: 1.1;
-    letter-spacing: 0.05em;
-    text-shadow:
-      0 0 30px rgba(201,168,76,0.6),
-      0 0 80px rgba(201,168,76,0.25),
-      2px 2px 0 rgba(0,0,0,0.8);
-    margin: 0;
-  }
-
-  .title-sub {
-    font-family: var(--font-heading);
-    font-size: clamp(0.85rem, 2vw, 1.25rem);
-    letter-spacing: 0.35em;
-    color: var(--silver);
-    text-transform: uppercase;
-    margin-top: 12px;
-    text-shadow: 0 0 20px rgba(91,63,160,0.6);
-  }
-
-  h2.section-title {
-    font-family: var(--font-title);
-    font-size: clamp(1.5rem, 4vw, 2.8rem);
-    color: var(--gold);
-    font-weight: 700;
-    margin: 0 0 8px 0;
-    text-shadow: 0 0 25px rgba(201,168,76,0.5), 2px 2px 0 rgba(0,0,0,0.9);
-    text-align: center;
-  }
-
-  p.body-text {
-    font-family: var(--font-body);
-    font-size: clamp(0.95rem, 1.8vw, 1.15rem);
-    color: var(--moonstone);
-    line-height: 1.75;
-    text-align: center;
-    max-width: 700px;
-    margin: 10px auto;
-  }
-
-  /* ===== CARDS ===== */
-  .card-grid {
-    display: grid;
-    gap: 5px;
-    width: 100%;
-    max-width: 980px;
-    margin-top: 16px;
-  }
-
-  .card-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
-  .card-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
-
-  .dark-card {
-    background: linear-gradient(145deg, rgba(26,20,40,0.9), rgba(10,8,20,0.95));
-    border: 1px solid rgba(201,168,76,0.2);
-    border-radius: 4px;
-    padding: 28px 22px;
-    position: relative;
-    overflow: hidden;
-    transition: border-color 0.3s, transform 0.3s;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.6), inset 0 1px 0 rgba(201,168,76,0.1);
-  }
-
-  .dark-card::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: linear-gradient(135deg, rgba(201,168,76,0.04) 0%, transparent 60%);
-    pointer-events: none;
-  }
-
-  .dark-card:hover {
-    border-color: rgba(201,168,76,0.5);
-    transform: translateY(-3px);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.7), 0 0 20px rgba(201,168,76,0.12);
-  }
-
-  .card-icon {
-    font-size: 40px !important;
-    color: var(--gold);
-    display: block;
-    margin-bottom: 12px;
-    filter: drop-shadow(0 0 8px rgba(201,168,76,0.4));
-    font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 40;
-  }
-
-  .card-icon.crimson { color: var(--ember); filter: drop-shadow(0 0 8px rgba(196,43,43,0.4)); }
-  .card-icon.arcane { color: var(--arcane); filter: drop-shadow(0 0 8px rgba(123,92,192,0.4)); }
-  .card-icon.frost { color: var(--frost); filter: drop-shadow(0 0 8px rgba(74,127,165,0.4)); }
-
-  .card-title {
-    font-family: var(--font-heading);
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--gold-bright);
-    letter-spacing: 0.08em;
-    margin: 0 0 8px 0;
-    text-transform: uppercase;
-  }
-
-  .card-body {
-    font-family: var(--font-body);
-    font-size: 0.88rem;
-    color: var(--silver);
-    line-height: 1.6;
-    margin: 0;
-    font-style: italic;
-  }
-
-  /* ===== HERO SLIDE ===== */
-  .hero-bg {
-    background:
-      radial-gradient(ellipse 80% 60% at 50% 40%, rgba(90,63,160,0.18) 0%, transparent 65%),
-      radial-gradient(ellipse 50% 40% at 50% 80%, rgba(122,11,11,0.22) 0%, transparent 60%),
-      linear-gradient(180deg, #04030a 0%, #0d0b1a 50%, #04030a 100%);
-  }
-
-  .hero-ornament {
-    grid-area: stack;
-    width: 280px; height: 280px;
-    align-self: center; justify-self: center;
-    opacity: 0.06;
-    pointer-events: none;
-  }
-
-  .hero-tagline {
-    font-family: var(--font-body);
-    font-style: italic;
-    font-size: clamp(0.95rem, 1.8vw, 1.2rem);
-    color: var(--silver);
-    margin-top: 20px;
-    max-width: 580px;
-    text-align: center;
-    line-height: 1.7;
-  }
-
-  .corners-layer {
-    grid-area: stack;
-    width: 100%; height: 100%;
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    grid-template-rows: auto 1fr auto;
-    pointer-events: none;
-    align-self: stretch; justify-self: stretch;
-  }
-
-  .corner-ornament {
-    width: 80px; height: 80px;
-    opacity: 0.35;
-    margin: 20px;
-  }
-  .corner-ornament.tl { grid-column: 1; grid-row: 1; }
-  .corner-ornament.tr { grid-column: 3; grid-row: 1; transform: scaleX(-1); }
-  .corner-ornament.bl { grid-column: 1; grid-row: 3; transform: scaleY(-1); }
-  .corner-ornament.br { grid-column: 3; grid-row: 3; transform: scale(-1,-1); }
-
-  /* ===== AUDIENCE SLIDE ===== */
-  .audience-ring {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 14px;
-    justify-content: center;
-    max-width: 820px;
-    margin-top: 16px;
-  }
-
-  .audience-tag {
-    display: flex; align-items: center; gap: 10px;
-    background: linear-gradient(135deg, rgba(26,20,40,0.9), rgba(16,13,28,0.95));
-    border: 1px solid rgba(201,168,76,0.25);
-    border-radius: 2px;
-    padding: 12px 22px;
-    font-family: var(--font-heading);
-    font-size: 0.9rem;
-    color: var(--moonstone);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    transition: all 0.3s;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.4);
-  }
-
-  .audience-tag:hover {
-    border-color: rgba(201,168,76,0.6);
-    color: var(--gold-bright);
-    transform: translateY(-2px);
-  }
-
-  .audience-tag .material-symbols-outlined {
-    font-size: 22px !important;
-    color: var(--gold);
-    font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
-  }
-
-  /* ===== PRICING ===== */
-  .price-card {
-    background: linear-gradient(160deg, rgba(26,20,40,0.95), rgba(10,8,18,0.98));
-    border: 1px solid rgba(201,168,76,0.2);
-    border-radius: 4px;
-    padding: 10px 20px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.6);
-  }
-
-  .price-card.featured {
-    border-color: var(--gold);
-    box-shadow: 0 8px 40px rgba(0,0,0,0.7), 0 0 30px rgba(201,168,76,0.2);
-  }
-
-  .price-card.featured::before {
-    content: 'ЛУЧШИЙ ВЫБОР';
-    position: absolute; top: 0; left: 0; right: 0;
-    background: var(--gold);
-    color: var(--void);
-    font-family: var(--font-heading);
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    padding: 5px;
-    text-align: center;
-  }
-
-  .price-tier {
-    font-family: var(--font-heading);
-    font-size: 0.85rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--silver);
-    margin-bottom: 8px;
-  }
-
-  .price-amount {
-    font-family: var(--font-title);
-    font-size: clamp(1.8rem, 4vw, 2.8rem);
-    color: var(--gold-bright);
-    text-shadow: 0 0 20px rgba(201,168,76,0.4);
-    line-height: 1;
-    margin: 8px 0;
-  }
-
-  .price-sub {
-    font-family: var(--font-body);
-    font-style: italic;
-    font-size: 0.8rem;
-    color: var(--silver);
-    opacity: 0.7;
-    margin-bottom: 14px;
-  }
-
-  .price-features {
-    list-style: none;
-    padding: 0; margin: 0;
-    text-align: left;
-  }
-
-  .price-features li {
-    display: flex; align-items: flex-start; gap: 8px;
-    font-family: var(--font-body);
-    font-size: 0.82rem;
-    color: var(--moonstone);
-    padding: 4px 0;
-    border-top: 1px solid rgba(201,168,76,0.08);
-  }
-
-  .price-features li .material-symbols-outlined {
-    font-size: 16px !important;
-    color: var(--gold);
-    flex-shrink: 0;
-    margin-top: 1px;
-    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20;
-  }
-
-  /* ===== PROMO BANNER ===== */
-  .promo-banner {
-    background: linear-gradient(135deg, rgba(122,11,11,0.4), rgba(154,24,24,0.25));
-    border: 1px solid rgba(196,43,43,0.4);
-    border-radius: 4px;
-    padding: 14px 28px;
-    font-family: var(--font-heading);
-    font-size: 0.9rem;
-    letter-spacing: 0.05em;
-    color: #f0a0a0;
-    text-align: center;
-    max-width: 700px;
-    display: flex; align-items: center; gap: 12px;
-    justify-content: center;
-    box-shadow: 0 0 20px rgba(122,11,11,0.3);
-    margin-top: 14px;
-    animation: pulseGlow 3s ease-in-out infinite;
-  }
-
-  @keyframes pulseGlow {
-    0%, 100% { box-shadow: 0 0 20px rgba(122,11,11,0.3); }
-    50% { box-shadow: 0 0 35px rgba(196,43,43,0.4); }
-  }
-
-  /* ===== WHY US SLIDE ===== */
-  .why-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 18px;
-    max-width: 900px;
-    width: 100%;
-    margin-top: 14px;
-  }
-
-  .why-item {
-    display: flex;
-    gap: 16px;
-    align-items: flex-start;
-    background: rgba(26,20,40,0.6);
-    border-left: 3px solid var(--gold);
-    padding: 18px 20px;
-    border-radius: 2px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-    transition: background 0.3s;
-  }
-
-  .why-item:hover { background: rgba(36,28,55,0.7); }
-
-  .why-item .material-symbols-outlined {
-    font-size: 32px !important;
-    color: var(--gold);
-    flex-shrink: 0;
-    font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 32;
-    filter: drop-shadow(0 0 6px rgba(201,168,76,0.35));
-  }
-
-  .why-text h4 {
-    font-family: var(--font-heading);
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: var(--gold-bright);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin: 0 0 5px 0;
-  }
-
-  .why-text p {
-    font-family: var(--font-body);
-    font-style: italic;
-    font-size: 0.82rem;
-    color: var(--silver);
-    margin: 0;
-    line-height: 1.55;
-  }
-
-  /* ===== PRODUCT SLIDE ===== */
-  .product-card {
-    background: linear-gradient(155deg, rgba(26,20,40,0.92), rgba(10,8,18,0.97));
-    border: 1px solid rgba(201,168,76,0.18);
-    border-radius: 4px;
-    padding: 0 px 20px;
-    text-align: center;
-    transition: all 0.3s;
-    box-shadow: 0 6px 24px rgba(0,0,0,0.5);
-    position: relative; overflow: hidden;
-  }
-
-  .product-card::after {
-    content: '';
-    position: absolute; bottom: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(to right, transparent, var(--gold), transparent);
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  .product-card:hover { transform: translateY(-4px); border-color: rgba(201,168,76,0.45); }
-  .product-card:hover::after { opacity: 1; }
-
-  .product-icon {
-    font-size: 52px !important;
-    display: block;
-    margin: 0 auto 14px;
-    font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 48;
-    filter: drop-shadow(0 0 12px rgba(201,168,76,0.35));
-  }
-
-  .product-name {
-    font-family: var(--font-heading);
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--gold-bright);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-  }
-
-  .product-desc {
-    font-family: var(--font-body);
-    font-style: italic;
-    font-size: 0.82rem;
-    color: var(--silver);
-    line-height: 1.55;
-  }
-
-  .product-price-tag {
-    display: inline-block;
-    margin-top: 12px;
-    background: rgba(201,168,76,0.12);
-    border: 1px solid rgba(201,168,76,0.3);
-    border-radius: 2px;
-    padding: 4px 14px;
-    font-family: var(--font-heading);
-    font-size: 0.8rem;
-    color: var(--gold);
-    letter-spacing: 0.08em;
-  }
-
-  /* ===== CTA SLIDE ===== */
-  .cta-bg {
-    background:
-      radial-gradient(ellipse 60% 50% at 50% 50%, rgba(90,63,160,0.2) 0%, transparent 70%),
-      radial-gradient(ellipse 40% 35% at 30% 60%, rgba(122,11,11,0.2) 0%, transparent 55%),
-      linear-gradient(180deg, #04030a 0%, #0d0b1a 50%, #04030a 100%);
-  }
-
-  .cta-btn {
-    display: inline-flex; align-items: center; gap: 10px;
-    background: linear-gradient(135deg, rgba(201,168,76,0.15), rgba(201,168,76,0.08));
-    border: 1px solid var(--gold);
-    border-radius: 2px;
-    padding: 14px 36px;
-    font-family: var(--font-heading);
-    font-size: 1rem;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--gold-bright);
-    margin-top: 24px;
-    cursor: pointer;
-    transition: all 0.3s;
-    text-decoration: none;
-    box-shadow: 0 0 20px rgba(201,168,76,0.1);
-  }
-
-  .cta-btn:hover {
-    background: linear-gradient(135deg, rgba(201,168,76,0.3), rgba(201,168,76,0.15));
-    box-shadow: 0 0 35px rgba(201,168,76,0.25), 0 4px 16px rgba(0,0,0,0.5);
-    transform: translateY(-2px);
-  }
-
-  .contact-row {
-    display: flex; gap: 30px; flex-wrap: wrap;
-    justify-content: center; margin-top: 18px;
-  }
-
-  .contact-item {
-    display: flex; align-items: center; gap: 8px;
-    font-family: var(--font-heading);
-    font-size: 0.85rem;
-    color: var(--silver);
-    letter-spacing: 0.05em;
-  }
-
-  .contact-item .material-symbols-outlined {
-    font-size: 20px !important;
-    color: var(--gold);
-    font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
-  }
-
-  /* ===== SLIDE COUNTER DECORATION ===== */
-  .slide-num {
-    grid-area: stack;
-    align-self: end;
-    justify-self: end;
-    padding: 0 30px 20px 0;
-    font-family: var(--font-heading);
-    font-size: 0.65rem;
-    letter-spacing: 0.25em;
-    color: rgba(201,168,76,0.3);
-    text-transform: uppercase;
-    pointer-events: none;
-  }
-
-  /* ===== REVEAL OVERRIDES ===== */
-  .reveal .progress { background: rgba(201,168,76,0.15); }
-  .reveal .progress span { background: var(--gold); box-shadow: 0 0 10px rgba(201,168,76,0.5); }
-
-  .reveal .controls button { color: var(--gold) !important; opacity: 0.5; }
-  .reveal .controls button:hover { opacity: 1; }
-  .reveal .controls button.navigate-left:before,
-  .reveal .controls button.navigate-right:before,
-  .reveal .controls button.navigate-up:before,
-  .reveal .controls button.navigate-down:before { border-color: var(--gold) !important; }
-
-  .reveal .slide-number { color: var(--gold); font-family: var(--font-heading); }
-
-  /* ===== ANIM ===== */
-  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
-  @keyframes runeGlow { 0%,100%{opacity:0.06} 50%{opacity:0.13} }
-  @keyframes borderPulse { 0%,100%{border-color:rgba(201,168,76,0.2)} 50%{border-color:rgba(201,168,76,0.5)} }
-
-  .float-anim { animation: float 6s ease-in-out infinite; }
-  .rune-glow { animation: runeGlow 4s ease-in-out infinite; }
-
-  /* Section label */
-  .section-label {
-    font-family: var(--font-heading);
-    font-size: 0.65rem;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: var(--arcane);
-    margin-bottom: 6px;
-  }
-
-  /* Stat highlight */
-  .stat-row {
-    display: flex; gap: 30px; justify-content: center; margin: 14px 0;
-  }
-
-  .stat-box {
-    text-align: center;
-  }
-
-  .stat-number {
-    font-family: var(--font-title);
-    font-size: 2.2rem;
-    color: var(--gold-bright);
-    text-shadow: 0 0 20px rgba(201,168,76,0.4);
-    display: block;
-  }
-
-  .stat-label {
-    font-family: var(--font-heading);
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--silver);
-  }
-
-  /* Corner SVG ornament */
-  svg.corner-svg { color: var(--gold); }
-
-  /* Reduce base transition (Reveal default can clash) */
-  .reveal .slides section { transition: none; }
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мир Реликтов — Тёмная Атрибутика</title>
+
+    <!-- Reveal.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/theme/black.min.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&family=MedievalSharp&display=swap"
+          rel="stylesheet">
+
+    <!-- Material Symbols -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+
+    <style>
+        :root {
+            --void: #04030a;
+            --abyss: #080612;
+            --shadow: #100d1c;
+            --dusk: #1a1428;
+            --stone: #2a2240;
+            --silver: #a89fc0;
+            --moonstone: #c8bedd;
+            --gold: #c9a84c;
+            --gold-bright: #f0c060;
+            --blood: #7a0b0b;
+            --crimson: #9b1818;
+            --ember: #c42b2b;
+            --rune: #5a3fa0;
+            --arcane: #7b5cc0;
+            --frost: #4a7fa5;
+            --font-title: 'Cinzel Decorative', serif;
+            --font-heading: 'Cinzel', serif;
+            --font-body: 'IM Fell English', serif;
+        }
+
+        /* ===== BASE ===== */
+        .reveal-viewport {
+            background: var(--void) !important;
+        }
+
+        .reveal {
+            font-family: var(--font-body);
+            color: var(--moonstone);
+        }
+
+        .reveal .slides section {
+
+            display: grid !important;
+            grid-template-areas: "stack";
+            grid-template-columns: 1fr;
+            grid-template-rows: 1fr;
+            padding: 0 !important;
+            overflow: hidden;
+        }
+
+        .reveal p {
+            margin: 10px;
+        }
+
+        /* ===== BACKGROUNDS ===== */
+        .bg-layer {
+            grid-area: stack;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            align-self: stretch;
+            justify-self: stretch;
+        }
+
+        .noise-overlay {
+            grid-area: stack;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            background-size: 200px 200px;
+            opacity: 0.4;
+            pointer-events: none;
+            mix-blend-mode: overlay;
+            align-self: stretch;
+            justify-self: stretch;
+        }
+
+        .vignette {
+            grid-area: stack;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, transparent 30%, rgba(4, 3, 10, 0.85) 100%);
+            pointer-events: none;
+            align-self: stretch;
+            justify-self: stretch;
+        }
+
+        /* ===== DIVIDERS ===== */
+        .rune-divider {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 12px auto;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .rune-divider::before, .rune-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--gold) 60%, transparent);
+        }
+
+        .rune-divider span {
+            color: var(--gold);
+            font-size: 18px;
+            opacity: 0.8;
+        }
+
+        /* ===== SLIDE CONTENT WRAPPER ===== */
+        .slide-inner {
+            grid-area: stack;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 60px;
+            box-sizing: border-box;
+        }
+
+        /* ===== TYPOGRAPHY ===== */
+        .title-main {
+            font-family: var(--font-title);
+            font-size: clamp(2.2rem, 6vw, 4.5rem);
+            font-weight: 900;
+            color: var(--gold);
+            text-align: center;
+            line-height: 1.1;
+            letter-spacing: 0.05em;
+            text-shadow: 0 0 30px rgba(201, 168, 76, 0.6),
+            0 0 80px rgba(201, 168, 76, 0.25),
+            2px 2px 0 rgba(0, 0, 0, 0.8);
+            margin: 0;
+        }
+
+        .title-sub {
+            font-family: var(--font-heading);
+            font-size: clamp(0.85rem, 2vw, 1.25rem);
+            letter-spacing: 0.35em;
+            color: var(--silver);
+            text-transform: uppercase;
+            margin-top: 12px;
+            text-shadow: 0 0 20px rgba(91, 63, 160, 0.6);
+        }
+
+        h2.section-title {
+            font-family: var(--font-title);
+            font-size: clamp(1.5rem, 4vw, 2.8rem);
+            color: var(--gold);
+            font-weight: 700;
+            margin: 0 0 8px 0;
+            text-shadow: 0 0 25px rgba(201, 168, 76, 0.5), 2px 2px 0 rgba(0, 0, 0, 0.9);
+            text-align: center;
+        }
+
+        p.body-text {
+            font-family: var(--font-body);
+            font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+            color: var(--moonstone);
+            line-height: 1.75;
+            text-align: center;
+            max-width: 700px;
+            margin: 10px auto;
+        }
+
+        /* ===== CARDS ===== */
+        .card-grid {
+            display: grid;
+            gap: 5px;
+            width: 100%;
+            max-width: 980px;
+            margin-top: 16px;
+        }
+
+        .card-grid.cols-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .card-grid.cols-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .dark-card {
+            background: linear-gradient(145deg, rgba(26, 20, 40, 0.9), rgba(10, 8, 20, 0.95));
+            border: 1px solid rgba(201, 168, 76, 0.2);
+            border-radius: 4px;
+            padding: 28px 22px;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.3s, transform 0.3s;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(201, 168, 76, 0.1);
+        }
+
+        .dark-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(201, 168, 76, 0.04) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .dark-card:hover {
+            border-color: rgba(201, 168, 76, 0.5);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7), 0 0 20px rgba(201, 168, 76, 0.12);
+        }
+
+        .card-icon {
+            font-size: 40px !important;
+            color: var(--gold);
+            display: block;
+            margin-bottom: 12px;
+            filter: drop-shadow(0 0 8px rgba(201, 168, 76, 0.4));
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 40;
+        }
+
+        .card-icon.crimson {
+            color: var(--ember);
+            filter: drop-shadow(0 0 8px rgba(196, 43, 43, 0.4));
+        }
+
+        .card-icon.arcane {
+            color: var(--arcane);
+            filter: drop-shadow(0 0 8px rgba(123, 92, 192, 0.4));
+        }
+
+        .card-icon.frost {
+            color: var(--frost);
+            filter: drop-shadow(0 0 8px rgba(74, 127, 165, 0.4));
+        }
+
+        .card-title {
+            font-family: var(--font-heading);
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--gold-bright);
+            letter-spacing: 0.08em;
+            margin: 0 0 8px 0;
+            text-transform: uppercase;
+        }
+
+        .card-body {
+            font-family: var(--font-body);
+            font-size: 0.88rem;
+            color: var(--silver);
+            line-height: 1.6;
+            margin: 0;
+            font-style: italic;
+        }
+
+        /* ===== HERO SLIDE ===== */
+        .hero-bg {
+            background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(90, 63, 160, 0.18) 0%, transparent 65%),
+            radial-gradient(ellipse 50% 40% at 50% 80%, rgba(122, 11, 11, 0.22) 0%, transparent 60%),
+            linear-gradient(180deg, #04030a 0%, #0d0b1a 50%, #04030a 100%);
+        }
+
+        .hero-ornament {
+            grid-area: stack;
+            width: 280px;
+            height: 280px;
+            align-self: center;
+            justify-self: center;
+            opacity: 0.06;
+            pointer-events: none;
+        }
+
+        .hero-tagline {
+            font-family: var(--font-body);
+            font-style: italic;
+            font-size: clamp(0.95rem, 1.8vw, 1.2rem);
+            color: var(--silver);
+            margin-top: 20px;
+            max-width: 580px;
+            text-align: center;
+            line-height: 1.7;
+        }
+
+        .corners-layer {
+            grid-area: stack;
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            grid-template-rows: auto 1fr auto;
+            pointer-events: none;
+            align-self: stretch;
+            justify-self: stretch;
+        }
+
+        .corner-ornament {
+            width: 80px;
+            height: 80px;
+            opacity: 0.35;
+            margin: 20px;
+        }
+
+        .corner-ornament.tl {
+            grid-column: 1;
+            grid-row: 1;
+        }
+
+        .corner-ornament.tr {
+            grid-column: 3;
+            grid-row: 1;
+            transform: scaleX(-1);
+        }
+
+        .corner-ornament.bl {
+            grid-column: 1;
+            grid-row: 3;
+            transform: scaleY(-1);
+        }
+
+        .corner-ornament.br {
+            grid-column: 3;
+            grid-row: 3;
+            transform: scale(-1, -1);
+        }
+
+        /* ===== AUDIENCE SLIDE ===== */
+        .audience-ring {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            justify-content: center;
+            max-width: 820px;
+            margin-top: 16px;
+        }
+
+        .audience-tag {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, rgba(26, 20, 40, 0.9), rgba(16, 13, 28, 0.95));
+            border: 1px solid rgba(201, 168, 76, 0.25);
+            border-radius: 2px;
+            padding: 12px 22px;
+            font-family: var(--font-heading);
+            font-size: 0.9rem;
+            color: var(--moonstone);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+        }
+
+        .audience-tag:hover {
+            border-color: rgba(201, 168, 76, 0.6);
+            color: var(--gold-bright);
+            transform: translateY(-2px);
+        }
+
+        .audience-tag .material-symbols-outlined {
+            font-size: 22px !important;
+            color: var(--gold);
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+
+        /* ===== PRICING ===== */
+        .price-card {
+            background: linear-gradient(160deg, rgba(26, 20, 40, 0.95), rgba(10, 8, 18, 0.98));
+            border: 1px solid rgba(201, 168, 76, 0.2);
+            border-radius: 4px;
+            padding: 10px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+        }
+
+        .price-card.featured {
+            border-color: var(--gold);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.7), 0 0 30px rgba(201, 168, 76, 0.2);
+        }
+
+        .price-card.featured::before {
+            content: 'ЛУЧШИЙ ВЫБОР';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--gold);
+            color: var(--void);
+            font-family: var(--font-heading);
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            padding: 5px;
+            text-align: center;
+        }
+
+        .price-tier {
+            font-family: var(--font-heading);
+            font-size: 0.85rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--silver);
+            margin-bottom: 8px;
+        }
+
+        .price-amount {
+            font-family: var(--font-title);
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            color: var(--gold-bright);
+            text-shadow: 0 0 20px rgba(201, 168, 76, 0.4);
+            line-height: 1;
+            margin: 8px 0;
+        }
+
+        .price-sub {
+            font-family: var(--font-body);
+            font-style: italic;
+            font-size: 0.8rem;
+            color: var(--silver);
+            opacity: 0.7;
+            margin-bottom: 14px;
+        }
+
+        .price-features {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: left;
+        }
+
+        .price-features li {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-family: var(--font-body);
+            font-size: 0.82rem;
+            color: var(--moonstone);
+            padding: 4px 0;
+            border-top: 1px solid rgba(201, 168, 76, 0.08);
+        }
+
+        .price-features li .material-symbols-outlined {
+            font-size: 16px !important;
+            color: var(--gold);
+            flex-shrink: 0;
+            margin-top: 1px;
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+        }
+
+        /* ===== PROMO BANNER ===== */
+        .promo-banner {
+            background: linear-gradient(135deg, rgba(122, 11, 11, 0.4), rgba(154, 24, 24, 0.25));
+            border: 1px solid rgba(196, 43, 43, 0.4);
+            border-radius: 4px;
+            padding: 14px 28px;
+            font-family: var(--font-heading);
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+            color: #f0a0a0;
+            text-align: center;
+            max-width: 700px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(122, 11, 11, 0.3);
+            margin-top: 14px;
+            animation: pulseGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(122, 11, 11, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 35px rgba(196, 43, 43, 0.4);
+            }
+        }
+
+        /* ===== WHY US SLIDE ===== */
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+            max-width: 900px;
+            width: 100%;
+            margin-top: 14px;
+        }
+
+        .why-item {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            background: rgba(26, 20, 40, 0.6);
+            border-left: 3px solid var(--gold);
+            padding: 18px 20px;
+            border-radius: 2px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            transition: background 0.3s;
+        }
+
+        .why-item:hover {
+            background: rgba(36, 28, 55, 0.7);
+        }
+
+        .why-item .material-symbols-outlined {
+            font-size: 32px !important;
+            color: var(--gold);
+            flex-shrink: 0;
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 32;
+            filter: drop-shadow(0 0 6px rgba(201, 168, 76, 0.35));
+        }
+
+        .why-text h4 {
+            font-family: var(--font-heading);
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--gold-bright);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin: 0 0 5px 0;
+        }
+
+        .why-text p {
+            font-family: var(--font-body);
+            font-style: italic;
+            font-size: 0.82rem;
+            color: var(--silver);
+            margin: 0;
+            line-height: 1.55;
+        }
+
+        /* ===== PRODUCT SLIDE ===== */
+        .product-card {
+            background: linear-gradient(155deg, rgba(26, 20, 40, 0.92), rgba(10, 8, 18, 0.97));
+            border: 1px solid rgba(201, 168, 76, 0.18);
+            border-radius: 4px;
+            padding: 0 20px;
+            text-align: center;
+            transition: all 0.3s;
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--gold), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(201, 168, 76, 0.45);
+        }
+
+        .product-card:hover::after {
+            opacity: 1;
+        }
+
+        .product-icon {
+            font-size: 52px !important;
+            display: block;
+            margin: 0 auto 14px;
+            font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 48;
+            filter: drop-shadow(0 0 12px rgba(201, 168, 76, 0.35));
+        }
+
+        .product-name {
+            font-family: var(--font-heading);
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--gold-bright);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .product-desc {
+            font-family: var(--font-body);
+            font-style: italic;
+            font-size: 0.82rem;
+            color: var(--silver);
+            line-height: 1.55;
+        }
+
+        .product-price-tag {
+            display: inline-block;
+            margin-top: 12px;
+            background: rgba(201, 168, 76, 0.12);
+            border: 1px solid rgba(201, 168, 76, 0.3);
+            border-radius: 2px;
+            padding: 4px 14px;
+            font-family: var(--font-heading);
+            font-size: 0.8rem;
+            color: var(--gold);
+            letter-spacing: 0.08em;
+        }
+
+        /* ===== CTA SLIDE ===== */
+        .cta-bg {
+            background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(90, 63, 160, 0.2) 0%, transparent 70%),
+            radial-gradient(ellipse 40% 35% at 30% 60%, rgba(122, 11, 11, 0.2) 0%, transparent 55%),
+            linear-gradient(180deg, #04030a 0%, #0d0b1a 50%, #04030a 100%);
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, rgba(201, 168, 76, 0.15), rgba(201, 168, 76, 0.08));
+            border: 1px solid var(--gold);
+            border-radius: 2px;
+            padding: 14px 36px;
+            font-family: var(--font-heading);
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--gold-bright);
+            margin-top: 24px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            box-shadow: 0 0 20px rgba(201, 168, 76, 0.1);
+        }
+
+        .cta-btn:hover {
+            background: linear-gradient(135deg, rgba(201, 168, 76, 0.3), rgba(201, 168, 76, 0.15));
+            box-shadow: 0 0 35px rgba(201, 168, 76, 0.25), 0 4px 16px rgba(0, 0, 0, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .contact-row {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 18px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-heading);
+            font-size: 0.85rem;
+            color: var(--silver);
+            letter-spacing: 0.05em;
+        }
+
+        .contact-item .material-symbols-outlined {
+            font-size: 20px !important;
+            color: var(--gold);
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+
+        /* ===== SLIDE COUNTER DECORATION ===== */
+        .slide-num {
+            grid-area: stack;
+            align-self: end;
+            justify-self: end;
+            padding: 0 30px 20px 0;
+            font-family: var(--font-heading);
+            font-size: 0.65rem;
+            letter-spacing: 0.25em;
+            color: rgba(201, 168, 76, 0.3);
+            text-transform: uppercase;
+            pointer-events: none;
+        }
+
+        /* ===== REVEAL OVERRIDES ===== */
+        .reveal .progress {
+            background: rgba(201, 168, 76, 0.15);
+        }
+
+        .reveal .progress span {
+            background: var(--gold);
+            box-shadow: 0 0 10px rgba(201, 168, 76, 0.5);
+        }
+
+        .reveal .controls button {
+            color: var(--gold) !important;
+            opacity: 0.5;
+        }
+
+        .reveal .controls button:hover {
+            opacity: 1;
+        }
+
+        .reveal .controls button.navigate-left:before,
+        .reveal .controls button.navigate-right:before,
+        .reveal .controls button.navigate-up:before,
+        .reveal .controls button.navigate-down:before {
+            border-color: var(--gold) !important;
+        }
+
+        .reveal .slide-number {
+            color: var(--gold);
+            font-family: var(--font-heading);
+        }
+
+        /* ===== ANIM ===== */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0)
+            }
+            50% {
+                transform: translateY(-8px)
+            }
+        }
+
+        @keyframes runeGlow {
+            0%, 100% {
+                opacity: 0.06
+            }
+            50% {
+                opacity: 0.13
+            }
+        }
+
+        @keyframes borderPulse {
+            0%, 100% {
+                border-color: rgba(201, 168, 76, 0.2)
+            }
+            50% {
+                border-color: rgba(201, 168, 76, 0.5)
+            }
+        }
+
+        .float-anim {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .rune-glow {
+            animation: runeGlow 4s ease-in-out infinite;
+        }
+
+        /* Section label */
+        .section-label {
+            font-family: var(--font-heading);
+            font-size: 0.65rem;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--arcane);
+            margin-bottom: 6px;
+        }
+
+        /* Stat highlight */
+        .stat-row {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            margin: 14px 0;
+        }
+
+        .stat-box {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: var(--font-title);
+            font-size: 2.2rem;
+            color: var(--gold-bright);
+            text-shadow: 0 0 20px rgba(201, 168, 76, 0.4);
+            display: block;
+        }
+
+        .stat-label {
+            font-family: var(--font-heading);
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--silver);
+        }
+
+        /* Corner SVG ornament */
+        svg.corner-svg {
+            color: var(--gold);
+        }
+
+        /* Reduce base transition (Reveal default can clash) */
+        .reveal .slides section {
+            transition: none;
+        }
+
+    </style>
 </head>
 <body>
 
 <div class="reveal">
-<div class="slides">
+    <div class="slides">
 
-  <!-- ═══════════════════════════════════════ SLIDE 1 — HERO ═══ -->
-  <section data-transition="fade">
-    <div class="bg-layer hero-bg"></div>
-    <div class="noise-overlay"></div>
-    <div class="vignette"></div>
+        <!-- ═══════════════════════════════════════ SLIDE 1 — HERO ═══ -->
+        <section data-transition="fade">
+            <div class="bg-layer hero-bg"></div>
+            <div class="noise-overlay"></div>
+            <div class="vignette"></div>
 
-    <!-- Corner ornaments (SVG) -->
-    <div class="corners-layer">
-    <svg class="corner-ornament tl" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M4 76 L4 4 L76 4" stroke="#c9a84c" stroke-width="1.5" fill="none" opacity="0.6"/>
-      <path d="M4 60 L4 4 L60 4" stroke="#c9a84c" stroke-width="0.5" fill="none" opacity="0.3"/>
-      <circle cx="4" cy="4" r="3" fill="#c9a84c" opacity="0.6"/>
-      <path d="M14 4 L4 14" stroke="#c9a84c" stroke-width="0.8" opacity="0.5"/>
-      <path d="M24 4 L4 24" stroke="#c9a84c" stroke-width="0.4" opacity="0.25"/>
-    </svg>
-    <svg class="corner-ornament tr" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M4 76 L4 4 L76 4" stroke="#c9a84c" stroke-width="1.5" fill="none" opacity="0.6"/>
-      <path d="M4 60 L4 4 L60 4" stroke="#c9a84c" stroke-width="0.5" fill="none" opacity="0.3"/>
-      <circle cx="4" cy="4" r="3" fill="#c9a84c" opacity="0.6"/>
-    </svg>
-    <svg class="corner-ornament bl" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M4 76 L4 4 L76 4" stroke="#c9a84c" stroke-width="1.5" fill="none" opacity="0.6"/>
-      <circle cx="4" cy="4" r="3" fill="#c9a84c" opacity="0.6"/>
-    </svg>
-    <svg class="corner-ornament br" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M4 76 L4 4 L76 4" stroke="#c9a84c" stroke-width="1.5" fill="none" opacity="0.6"/>
-      <circle cx="4" cy="4" r="3" fill="#c9a84c" opacity="0.6"/>
-    </svg>
-    </div>
+            <!-- Corner ornaments (SVG) -->
+            <div class="corners-layer">
+                <svg class="corner-ornament tl" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 76 L4 4 L76 4" stroke="#c9a84c" stroke-width="1.5" fill="none" opacity="0.6"/>
+                    <path d="M4 60 L4 4 L60 4" stroke="#c9a84c" stroke-width="0.5" fill="none" opacity="0.3"/>
+                    <circle cx="4" cy="4" r="3" fill="#c9a84c" opacity="0.6"/>
+                    <path d="M14 4 L4 14" stroke="#c9a84c" stroke-width="0.8" opacity="0.5"/>
+                    <path d="M24 4 L4 24" stroke="#c9a84c" stroke-width="0.4" opacity="0.25"/>
+                </svg>
+                <svg class="corner-ornament tr" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 76 L4 4 L76 4" stroke="#c9a84c" stroke-width="1.5" fill="none" opacity="0.6"/>
+                    <path d="M4 60 L4 4 L60 4" stroke="#c9a84c" stroke-width="0.5" fill="none" opacity="0.3"/>
+                    <circle cx="4" cy="4" r="3" fill="#c9a84c" opacity="0.6"/>
+                </svg>
+                <svg class="corner-ornament bl" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 76 L4 4 L76 4" stroke="#c9a84c" stroke-width="1.5" fill="none" opacity="0.6"/>
+                    <circle cx="4" cy="4" r="3" fill="#c9a84c" opacity="0.6"/>
+                </svg>
+                <svg class="corner-ornament br" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 76 L4 4 L76 4" stroke="#c9a84c" stroke-width="1.5" fill="none" opacity="0.6"/>
+                    <circle cx="4" cy="4" r="3" fill="#c9a84c" opacity="0.6"/>
+                </svg>
+            </div>
 
-    <!-- Background rune circle -->
-    <svg class="hero-ornament rune-glow" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="140" cy="140" r="135" stroke="#c9a84c" stroke-width="1" fill="none"/>
-      <circle cx="140" cy="140" r="115" stroke="#c9a84c" stroke-width="0.5" fill="none"/>
-      <polygon points="140,10 268,210 12,210" stroke="#c9a84c" stroke-width="0.8" fill="none"/>
-      <polygon points="140,270 12,70 268,70" stroke="#c9a84c" stroke-width="0.8" fill="none"/>
-      <circle cx="140" cy="140" r="5" stroke="#c9a84c" stroke-width="1" fill="none"/>
-      <line x1="140" y1="5" x2="140" y2="275" stroke="#c9a84c" stroke-width="0.3"/>
-      <line x1="5" y1="140" x2="275" y2="140" stroke="#c9a84c" stroke-width="0.3"/>
-    </svg>
+            <!-- Background rune circle -->
+            <svg class="hero-ornament rune-glow" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="140" cy="140" r="135" stroke="#c9a84c" stroke-width="1" fill="none"/>
+                <circle cx="140" cy="140" r="115" stroke="#c9a84c" stroke-width="0.5" fill="none"/>
+                <polygon points="140,10 268,210 12,210" stroke="#c9a84c" stroke-width="0.8" fill="none"/>
+                <polygon points="140,270 12,70 268,70" stroke="#c9a84c" stroke-width="0.8" fill="none"/>
+                <circle cx="140" cy="140" r="5" stroke="#c9a84c" stroke-width="1" fill="none"/>
+                <line x1="140" y1="5" x2="140" y2="275" stroke="#c9a84c" stroke-width="0.3"/>
+                <line x1="5" y1="140" x2="275" y2="140" stroke="#c9a84c" stroke-width="0.3"/>
+            </svg>
 
-    <div class="slide-inner">
-      <div class="section-label fragment fade-in" data-fragment-index="0">— Фанатская атрибутика тёмных миров —</div>
+            <div class="slide-inner">
+                <div class="section-label fragment fade-in" data-fragment-index="0">— Фанатская атрибутика тёмных миров
+                    —
+                </div>
 
-      <h1 class="title-main fragment fade-in" data-fragment-index="1">
-        Realm Relics
-      </h1>
+                <h1 class="title-main fragment fade-in" data-fragment-index="1">
+                    Мир Реликтов
+                </h1>
 
-      <div class="rune-divider fragment fade-in" data-fragment-index="2">
-        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 0,'wght' 200,'GRAD' 0,'opsz' 24;">diamond</span>
-      </div>
+                <div class="rune-divider fragment fade-in" data-fragment-index="2">
+                    <span class="material-symbols-outlined"
+                          style="font-variation-settings:'FILL' 0,'wght' 200,'GRAD' 0,'opsz' 24;">diamond</span>
+                </div>
 
-      <p class="title-sub fragment fade-in" data-fragment-index="2">Артефакты тёмных миров</p>
+                <p class="title-sub fragment fade-in" data-fragment-index="2">Артефакты тёмных миров</p>
 
-      <p class="hero-tagline fragment fade-in" data-fragment-index="3">
-        Фигурки, амулеты и браслеты из вселенных<br>
-        <em>Ведьмака, Dark Souls, Skyrim</em> — и многих других.
-      </p>
-    </div>
-    <div class="slide-num">01 / 06</div>
-  </section>
+                <p class="hero-tagline fragment fade-in" data-fragment-index="3">
+                    Фигурки, амулеты и браслеты из вселенных<br>
+                    <em>Ведьмака, Dark Souls, Skyrim</em> — и многих других.
+                </p>
+            </div>
+            <div class="slide-num">01 / 06</div>
+        </section>
 
-    <!-- ═══════════════════════════════════════ SLIDE 2 — О НАС (без иконок) ═══ -->
-  <section data-transition="fade">
-    <div class="bg-layer" style="background: linear-gradient(160deg, #04030a 0%, #0e0b1c 50%, #04030a 100%);"></div>
-    <div class="noise-overlay"></div>
-    <div class="vignette"></div>
+        <!-- ═══════════════════════════════════════ SLIDE 2 — О НАС (без иконок) ═══ -->
+        <section data-transition="fade">
+            <div class="bg-layer"
+                 style="background: linear-gradient(160deg, #04030a 0%, #0e0b1c 50%, #04030a 100%);"></div>
+            <div class="noise-overlay"></div>
+            <div class="vignette"></div>
 
-    <div class="slide-inner">
-      <div class="section-label">Наша суть</div>
-      <h2 class="section-title fragment fade-up">Кто мы такие?</h2>
-      <div class="rune-divider fragment fade-in"><span class="material-symbols-outlined" style="font-size:16px !important; font-variation-settings:'FILL' 0,'wght' 200,'GRAD' 0,'opsz' 20;">flare</span></div>
+            <div class="slide-inner">
+                <div class="section-label">Наша суть</div>
+                <h2 class="section-title fragment fade-up">Кто мы такие?</h2>
+                <div class="rune-divider fragment fade-in"><span class="material-symbols-outlined"
+                                                                 style="font-size:16px !important; font-variation-settings:'FILL' 0,'wght' 200,'GRAD' 0,'opsz' 20;">flare</span>
+                </div>
 
-      <p class="body-text fragment fade-up">
-        Мы создаём <strong style="color:var(--gold)">коллекционную атрибутику</strong> для фанатов тёмного фэнтези.
-        Каждое изделие — это кусочек другого мира, воплощённый в металле, смоле и камне.
-      </p>
+                <p class="body-text fragment fade-up">
+                    Мы создаём <strong style="color:var(--gold)">коллекционную атрибутику</strong> для фанатов тёмного
+                    фэнтези.
+                    Каждое изделие — это кусочек другого мира, воплощённый в металле, смоле и камне.
+                </p>
 
-      <div class="card-grid cols-3 fragment fade-up" style="margin-top: 24px;">
-        <div class="dark-card" style="text-align:center;">
-          <p class="card-title">Атмосфера</p>
-          <p class="card-body">Каждый предмет несёт дух игры — от дизайна до упаковки</p>
-        </div>
-        <div class="dark-card" style="text-align:center;">
-          <p class="card-title">Ручная работа</p>
-          <p class="card-body">Лимитированные серии и уникальные изделия под заказ</p>
-        </div>
-        <div class="dark-card" style="text-align:center;">
-          <p class="card-title">Страсть</p>
-          <p class="card-body">Мы сами фанаты этих миров — понимаем, что важно</p>
-        </div>
-      </div>
+                <div class="card-grid cols-3 fragment fade-up" style="margin-top: 24px;">
+                    <div class="dark-card" style="text-align:center;">
+                        <p class="card-title">Атмосфера</p>
+                        <p class="card-body">Каждый предмет несёт дух игры — от дизайна до упаковки</p>
+                    </div>
+                    <div class="dark-card" style="text-align:center;">
+                        <p class="card-title">Ручная работа</p>
+                        <p class="card-body">Лимитированные серии и уникальные изделия под заказ</p>
+                    </div>
+                    <div class="dark-card" style="text-align:center;">
+                        <p class="card-title">Страсть</p>
+                        <p class="card-body">Мы сами фанаты этих миров — понимаем, что важно</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-num">02 / 07</div>
+        </section>
 
-      <div class="stat-row fragment fade-up" style="margin-top: 24px;">
-        <div class="stat-box">
-          <span class="stat-number">200+</span>
-          <span class="stat-label">позиций в каталоге</span>
-        </div>
-        <div class="stat-box" style="border-left: 1px solid rgba(201,168,76,0.2); border-right: 1px solid rgba(201,168,76,0.2); padding: 0 30px;">
-          <span class="stat-number">15+</span>
-          <span class="stat-label">вселенных</span>
-        </div>
-        <div class="stat-box">
-          <span class="stat-number">1000+</span>
-          <span class="stat-label">довольных героев</span>
-        </div>
-      </div>
-    </div>
-    <div class="slide-num">02 / 07</div>
-  </section>
+        <!-- ═══════════════════════════════════════ SLIDE 3 — ТОВАРЫ ═══ -->
+        <section data-transition="fade">
+            <div class="bg-layer"
+                 style="background: linear-gradient(170deg, #060411 0%, #0d0b1c 60%, #04030a 100%);"></div>
+            <div class="noise-overlay"></div>
+            <div class="vignette"></div>
 
-  <!-- ═══════════════════════════════════════ SLIDE 3 — ТОВАРЫ ═══ -->
-  <section data-transition="fade">
-    <div class="bg-layer" style="background: linear-gradient(170deg, #060411 0%, #0d0b1c 60%, #04030a 100%);"></div>
-    <div class="noise-overlay"></div>
-    <div class="vignette"></div>
+            <div class="slide-inner">
+                <div class="section-label">Каталог</div>
+                <h2 class="section-title fragment fade-up">Наши Артефакты</h2>
+                <div class="rune-divider fragment fade-in"><span class="material-symbols-outlined"
+                                                                 style="font-size:16px !important; font-variation-settings:'FILL' 0,'wght' 200,'GRAD' 0,'opsz' 20;">stars</span>
+                </div>
 
-    <div class="slide-inner">
-      <div class="section-label">Каталог</div>
-      <h2 class="section-title fragment fade-up">Наши Артефакты</h2>
-      <div class="rune-divider fragment fade-in"><span class="material-symbols-outlined" style="font-size:16px !important; font-variation-settings:'FILL' 0,'wght' 200,'GRAD' 0,'opsz' 20;">stars</span></div>
+                <div class="card-grid cols-3 fragment fade-up" style="margin-top: 20px; max-width: 960px;">
+                    <div class="product-card">
+                        <span class="material-symbols-outlined product-icon" style="color:#c9a84c;">person</span>
+                        <p class="product-name">Фигурки</p>
+                        <p class="product-desc">Детализированные статуэтки персонажей из смолы и металла. Лимитированные
+                            серии и коллекционные экземпляры</p>
+                        <span class="product-price-tag">от 1 500 ₽</span>
+                    </div>
+                    <div class="product-card">
+                        <span class="material-symbols-outlined product-icon" style="color:#c42b2b;">neurology</span>
+                        <p class="product-name">Амулеты</p>
+                        <p class="product-desc">Медальоны Ведьмака, знаки Довакина, кольца власти — точные реплики
+                            культовых символов</p>
+                        <span class="product-price-tag">от 500 ₽</span>
+                    </div>
+                    <div class="product-card">
+                        <span class="material-symbols-outlined product-icon" style="color:#7b5cc0;">auto_awesome</span>
+                        <p class="product-name">Браслеты</p>
+                        <p class="product-desc">Кожаные и металлические браслеты с рунами, гербами и символами тёмных
+                            миров</p>
+                        <span class="product-price-tag">от 400 ₽</span>
+                    </div>
+                    <div class="product-card">
+                        <span class="material-symbols-outlined product-icon" style="color:#4a7fa5;">inventory_2</span>
+                        <p class="product-name">Наборы</p>
+                        <p class="product-desc">Тематические подарочные боксы — идеально для особых случаев и
+                            коллекционеров</p>
+                        <span class="product-price-tag">от 2 000 ₽</span>
+                    </div>
+                    <div class="product-card">
+                        <span class="material-symbols-outlined product-icon" style="color:#8ba055;">eco</span>
+                        <p class="product-name">Значки & Патчи</p>
+                        <p class="product-desc">Эмалированные пины и нашивки с культовой символикой любимых игровых
+                            вселенных</p>
+                        <span class="product-price-tag">от 150 ₽</span>
+                    </div>
+                    <div class="product-card">
+                        <span class="material-symbols-outlined product-icon" style="color:#a07050;">edit</span>
+                        <p class="product-name">Под заказ</p>
+                        <p class="product-desc">Индивидуальное изделие по вашему эскизу — ваша идея, наши руки, их
+                            воплощение</p>
+                        <span class="product-price-tag">Обсуждаем</span>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-num">03 / 06</div>
+        </section>
 
-      <div class="card-grid cols-3 fragment fade-up" style="margin-top: 20px; max-width: 960px;">
-        <div class="product-card">
-          <span class="material-symbols-outlined product-icon" style="color:#c9a84c;">person</span>
-          <p class="product-name">Фигурки</p>
-          <p class="product-desc">Детализированные статуэтки персонажей из смолы и металла. Лимитированные серии и коллекционные экземпляры</p>
-          <span class="product-price-tag">от 1 500 ₽</span>
-        </div>
-        <div class="product-card">
-          <span class="material-symbols-outlined product-icon" style="color:#c42b2b;">neurology</span>
-          <p class="product-name">Амулеты</p>
-          <p class="product-desc">Медальоны Ведьмака, знаки Довакина, кольца власти — точные реплики культовых символов</p>
-          <span class="product-price-tag">от 500 ₽</span>
-        </div>
-        <div class="product-card">
-          <span class="material-symbols-outlined product-icon" style="color:#7b5cc0;">auto_awesome</span>
-          <p class="product-name">Браслеты</p>
-          <p class="product-desc">Кожаные и металлические браслеты с рунами, гербами и символами тёмных миров</p>
-          <span class="product-price-tag">от 400 ₽</span>
-        </div>
-        <div class="product-card">
-          <span class="material-symbols-outlined product-icon" style="color:#4a7fa5;">inventory_2</span>
-          <p class="product-name">Наборы</p>
-          <p class="product-desc">Тематические подарочные боксы — идеально для особых случаев и коллекционеров</p>
-          <span class="product-price-tag">от 2 000 ₽</span>
-        </div>
-        <div class="product-card">
-          <span class="material-symbols-outlined product-icon" style="color:#8ba055;">eco</span>
-          <p class="product-name">Значки & Патчи</p>
-          <p class="product-desc">Эмалированные пины и нашивки с культовой символикой любимых игровых вселенных</p>
-          <span class="product-price-tag">от 150 ₽</span>
-        </div>
-        <div class="product-card">
-          <span class="material-symbols-outlined product-icon" style="color:#a07050;">edit</span>
-          <p class="product-name">Под заказ</p>
-          <p class="product-desc">Индивидуальное изделие по вашему эскизу — ваша идея, наши руки, их воплощение</p>
-          <span class="product-price-tag">Обсуждаем</span>
-        </div>
-      </div>
-    </div>
-    <div class="slide-num">03 / 06</div>
-  </section>
+        <!-- ═══════════════════════════════════════ SLIDE 4 — ПОЧЕМУ МЫ ═══ -->
+        <section data-transition="fade">
+            <div class="bg-layer"
+                 style="background: linear-gradient(150deg, #060210 0%, #100d1a 50%, #04030a 100%);"></div>
+            <div class="noise-overlay"></div>
+            <div class="vignette"></div>
 
-  <!-- ═══════════════════════════════════════ SLIDE 4 — ПОЧЕМУ МЫ ═══ -->
-  <section data-transition="fade">
-    <div class="bg-layer" style="background: linear-gradient(150deg, #060210 0%, #100d1a 50%, #04030a 100%);"></div>
-    <div class="noise-overlay"></div>
-    <div class="vignette"></div>
+            <div class="slide-inner">
+                <div class="section-label">Преимущества</div>
+                <h2 class="section-title fragment fade-up">Почему именно мы?</h2>
+                <div class="rune-divider fragment fade-in"><span class="material-symbols-outlined"
+                                                                 style="font-size:16px !important; font-variation-settings:'FILL' 0,'wght' 200,'GRAD' 0,'opsz' 20;">shield</span>
+                </div>
 
-    <div class="slide-inner">
-      <div class="section-label">Преимущества</div>
-      <h2 class="section-title fragment fade-up">Почему именно мы?</h2>
-      <div class="rune-divider fragment fade-in"><span class="material-symbols-outlined" style="font-size:16px !important; font-variation-settings:'FILL' 0,'wght' 200,'GRAD' 0,'opsz' 20;">shield</span></div>
+                <div class="why-grid fragment fade-up">
+                    <div class="why-item">
+                        <span class="material-symbols-outlined">verified</span>
+                        <div class="why-text">
+                            <h4>Лицензионные дизайны</h4>
+                            <p>Все орнаменты и символы разработаны с уважением к каноническому лору, не нарушая
+                                авторских прав</p>
+                        </div>
+                    </div>
+                    <div class="why-item" style="border-left-color: var(--arcane);">
+                        <span class="material-symbols-outlined" style="color: var(--arcane);">workspace_premium</span>
+                        <div class="why-text">
+                            <h4>Премиум материалы</h4>
+                            <p>Металл, натуральная кожа, ювелирная смола — только то, что выдержит долгие зимы</p>
+                        </div>
+                    </div>
+                    <div class="why-item" style="border-left-color: var(--ember);">
+                        <span class="material-symbols-outlined" style="color: var(--ember);">local_shipping</span>
+                        <div class="why-text">
+                            <h4>Быстрая отправка</h4>
+                            <p>Готовые изделия отправляем в течение 1–2 дней. Индивидуальные — до 14 рабочих дней</p>
+                        </div>
+                    </div>
+                    <div class="why-item" style="border-left-color: var(--frost);">
+                        <span class="material-symbols-outlined" style="color: var(--frost);">support_agent</span>
+                        <div class="why-text">
+                            <h4>Живая поддержка</h4>
+                            <p>Фанаты отвечают фанатам — поможем выбрать, посоветуем, соберём подарочный набор</p>
+                        </div>
+                    </div>
+                    <div class="why-item">
+                        <span class="material-symbols-outlined">recycling</span>
+                        <div class="why-text">
+                            <h4>Обмен и возврат</h4>
+                            <p>Не подошло — обменяем или вернём деньги без вопросов в течение 30 дней</p>
+                        </div>
+                    </div>
+                    <div class="why-item" style="border-left-color: var(--arcane);">
+                        <span class="material-symbols-outlined" style="color: var(--arcane);">loyalty</span>
+                        <div class="why-text">
+                            <h4>Программа лояльности</h4>
+                            <p>Накапливайте «руны» с каждой покупки и обменивайте на скидки и эксклюзивы</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-num">04 / 06</div>
+        </section>
 
-      <div class="why-grid fragment fade-up">
-        <div class="why-item">
-          <span class="material-symbols-outlined">verified</span>
-          <div class="why-text">
-            <h4>Лицензионные дизайны</h4>
-            <p>Все орнаменты и символы разработаны с уважением к каноническому лору, не нарушая авторских прав</p>
-          </div>
-        </div>
-        <div class="why-item" style="border-left-color: var(--arcane);">
-          <span class="material-symbols-outlined" style="color: var(--arcane);">workspace_premium</span>
-          <div class="why-text">
-            <h4>Премиум материалы</h4>
-            <p>Металл, натуральная кожа, ювелирная смола — только то, что выдержит долгие зимы</p>
-          </div>
-        </div>
-        <div class="why-item" style="border-left-color: var(--ember);">
-          <span class="material-symbols-outlined" style="color: var(--ember);">local_shipping</span>
-          <div class="why-text">
-            <h4>Быстрая отправка</h4>
-            <p>Готовые изделия отправляем в течение 1–2 дней. Индивидуальные — до 14 рабочих дней</p>
-          </div>
-        </div>
-        <div class="why-item" style="border-left-color: var(--frost);">
-          <span class="material-symbols-outlined" style="color: var(--frost);">support_agent</span>
-          <div class="why-text">
-            <h4>Живая поддержка</h4>
-            <p>Фанаты отвечают фанатам — поможем выбрать, посоветуем, соберём подарочный набор</p>
-          </div>
-        </div>
-        <div class="why-item">
-          <span class="material-symbols-outlined">recycling</span>
-          <div class="why-text">
-            <h4>Обмен и возврат</h4>
-            <p>Не подошло — обменяем или вернём деньги без вопросов в течение 30 дней</p>
-          </div>
-        </div>
-        <div class="why-item" style="border-left-color: var(--arcane);">
-          <span class="material-symbols-outlined" style="color: var(--arcane);">loyalty</span>
-          <div class="why-text">
-            <h4>Программа лояльности</h4>
-            <p>Накапливайте «руны» с каждой покупки и обменивайте на скидки и эксклюзивы</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="slide-num">04 / 06</div>
-  </section>
+        <!-- ═══════════════════════════════════════ SLIDE 5 — АУДИТОРИЯ ═══ -->
+        <section data-transition="fade">
+            <div class="bg-layer"
+                 style="background: linear-gradient(165deg, #05030e 0%, #0c0a1a 55%, #04030a 100%);"></div>
+            <div class="noise-overlay"></div>
+            <div class="vignette"></div>
 
-  <!-- ═══════════════════════════════════════ SLIDE 5 — АУДИТОРИЯ ═══ -->
-  <section data-transition="fade">
-    <div class="bg-layer" style="background: linear-gradient(165deg, #05030e 0%, #0c0a1a 55%, #04030a 100%);"></div>
-    <div class="noise-overlay"></div>
-    <div class="vignette"></div>
+            <div class="slide-inner">
+                <div class="section-label">Наши Герои</div>
+                <h2 class="section-title fragment fade-up">Для кого наши артефакты?</h2>
+                <div class="rune-divider fragment fade-in"><span class="material-symbols-outlined"
+                                                                 style="font-size:16px !important; font-variation-settings:'FILL' 0,'wght' 200,'GRAD' 0,'opsz' 20;">group</span>
+                </div>
 
-    <div class="slide-inner">
-      <div class="section-label">Наши Герои</div>
-      <h2 class="section-title fragment fade-up">Для кого наши артефакты?</h2>
-      <div class="rune-divider fragment fade-in"><span class="material-symbols-outlined" style="font-size:16px !important; font-variation-settings:'FILL' 0,'wght' 200,'GRAD' 0,'opsz' 20;">group</span></div>
+                <p class="body-text fragment fade-up" style="margin-bottom: 8px;">
+                    Мы создаём для тех, кто <em>живёт</em> в этих мирах — не только играет в них.
+                </p>
 
-      <p class="body-text fragment fade-up" style="margin-bottom: 8px;">
-        Мы создаём для тех, кто <em>живёт</em> в этих мирах — не только играет в них.
-      </p>
+                <div class="audience-ring fragment fade-up">
+                    <div class="audience-tag"><span class="material-symbols-outlined">sports_esports</span>Геймеры и
+                        фанаты RPG
+                    </div>
+                    <div class="audience-tag"><span class="material-symbols-outlined">auto_stories</span>Любители
+                        фэнтези-литературы
+                    </div>
+                    <div class="audience-tag"><span class="material-symbols-outlined">groups</span>Подростки 14–25 лет
+                    </div>
+                    <div class="audience-tag"><span class="material-symbols-outlined">science</span>Гики и косплееры
+                    </div>
+                    <div class="audience-tag"><span class="material-symbols-outlined">table_bar</span>Настольные
+                        ролевики (D&D, Pathfinder)
+                    </div>
+                    <div class="audience-tag"><span class="material-symbols-outlined">collections</span>Коллекционеры
+                        фигурок
+                    </div>
+                    <div class="audience-tag"><span class="material-symbols-outlined">card_giftcard</span>Те, кто ищет
+                        необычный подарок
+                    </div>
+                    <div class="audience-tag"><span class="material-symbols-outlined">favorite</span>Фанаты с детским
+                        сердцем 30+
+                    </div>
+                    <div class="audience-tag"><span class="material-symbols-outlined">emoji_events</span>Участники
+                        фестивалей и ивентов
+                    </div>
+                </div>
 
-      <div class="audience-ring fragment fade-up">
-        <div class="audience-tag"><span class="material-symbols-outlined">sports_esports</span>Геймеры и фанаты RPG</div>
-        <div class="audience-tag"><span class="material-symbols-outlined">auto_stories</span>Любители фэнтези-литературы</div>
-        <div class="audience-tag"><span class="material-symbols-outlined">groups</span>Подростки 14–25 лет</div>
-        <div class="audience-tag"><span class="material-symbols-outlined">science</span>Гики и косплееры</div>
-        <div class="audience-tag"><span class="material-symbols-outlined">table_bar</span>Настольные ролевики (D&D, Pathfinder)</div>
-        <div class="audience-tag"><span class="material-symbols-outlined">collections</span>Коллекционеры фигурок</div>
-        <div class="audience-tag"><span class="material-symbols-outlined">card_giftcard</span>Те, кто ищет необычный подарок</div>
-        <div class="audience-tag"><span class="material-symbols-outlined">favorite</span>Фанаты с детским сердцем 30+</div>
-        <div class="audience-tag"><span class="material-symbols-outlined">emoji_events</span>Участники фестивалей и ивентов</div>
-      </div>
+                <div class="fragment fade-up"
+                     style="margin-top: 20px; background: rgba(90,63,160,0.12); border: 1px solid rgba(123,92,192,0.25); border-radius: 4px; padding: 14px 28px; max-width: 700px; text-align: center;">
+                    <p style="font-family: var(--font-body); font-style: italic; font-size: 0.9rem; color: var(--silver); margin: 0; line-height: 1.6;">
+                        «Мы не продаём безделушки — мы даём людям<br>кусочек мира, который они любят»
+                    </p>
+                </div>
+            </div>
+            <div class="slide-num">05 / 06</div>
+        </section>
 
-      <div class="fragment fade-up" style="margin-top: 20px; background: rgba(90,63,160,0.12); border: 1px solid rgba(123,92,192,0.25); border-radius: 4px; padding: 14px 28px; max-width: 700px; text-align: center;">
-        <p style="font-family: var(--font-body); font-style: italic; font-size: 0.9rem; color: var(--silver); margin: 0; line-height: 1.6;">
-          «Мы не продаём безделушки — мы даём людям<br>кусочек мира, который они любят»
-        </p>
-      </div>
-    </div>
-    <div class="slide-num">05 / 06</div>
-  </section>
+        <!-- ═══════════════════════════════════════ СЛАЙД 6 — ПРИМЕРЫ РАБОТ ═══ -->
+        <section data-transition="fade">
+            <div class="bg-layer"
+                 style="background: linear-gradient(165deg, #03020a 0%, #0b091a 50%, #04030a 100%);"></div>
+            <div class="noise-overlay"></div>
+            <div class="vignette"></div>
 
-  <!-- ═══════════════════════════════════════ СЛАЙД 6 — ПРИМЕРЫ РАБОТ ═══ -->
-  <section data-transition="fade">
-    <div class="bg-layer" style="background: linear-gradient(165deg, #03020a 0%, #0b091a 50%, #04030a 100%);"></div>
-    <div class="noise-overlay"></div>
-    <div class="vignette"></div>
+            <div class="slide-inner">
+                <div class="section-label">Портфолио</div>
+                <h2 class="section-title fragment fade-up">Примеры наших работ</h2>
+                <div class="rune-divider fragment fade-in"><span class="material-symbols-outlined"
+                                                                 style="font-size:16px !important; font-variation-settings:'FILL' 0,'wght' 200,'GRAD' 0,'opsz' 20;">photo_camera</span>
+                </div>
 
-    <div class="slide-inner">
-      <div class="section-label">Портфолио</div>
-      <h2 class="section-title fragment fade-up">Примеры наших работ</h2>
-      <div class="rune-divider fragment fade-in"><span class="material-symbols-outlined" style="font-size:16px !important; font-variation-settings:'FILL' 0,'wght' 200,'GRAD' 0,'opsz' 20;">photo_camera</span></div>
+                <div class="card-grid cols-3 fragment fade-up" style="margin-top: 20px; max-width: 960px; gap: 20px;">
 
-      <div class="card-grid cols-3 fragment fade-up" style="margin-top: 20px; max-width: 960px; gap: 20px;">
-        
-        <!-- Пример 1 -->
-        <div class="dark-card" style="text-align: center; padding: 16px 12px;">
-          <div style="width: 100%; height: 180px; background: linear-gradient(145deg, #1a1228, #0e0a18); border-radius: 4px; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(201,168,76,0.2);">
-            <span class="material-symbols-outlined" style="font-size: 64px; color: var(--gold); font-variation-settings:'FILL' 0,'wght' 200,'GRAD' 0,'opsz' 64;">stadia_controller</span>
-          </div>
-          <p class="card-title">Волчий медальон</p>
-          <p class="card-body">Ручная работа, металл, эпоксидная смола. Точная реплика из Ведьмака</p>
-          <span class="product-price-tag" style="margin-top: 12px;">от 1 200 ₽</span>
-        </div>
+                    <!-- Пример 1 -->
+                    <div class="dark-card" style="text-align: center; padding: 16px 12px;">
+                        <div style="width: 100%; height: 180px; background: linear-gradient(145deg, #1a1228, #0e0a18); border-radius: 4px; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(201,168,76,0.2);">
+                            <span class="material-symbols-outlined"
+                                  style="font-size: 64px; color: var(--gold); font-variation-settings:'FILL' 0,'wght' 200,'GRAD' 0,'opsz' 64;">stadia_controller</span>
+                        </div>
+                        <p class="card-title">Волчий медальон</p>
+                        <p class="card-body">Ручная работа, металл, эпоксидная смола. Точная реплика из Ведьмака</p>
+                        <span class="product-price-tag" style="margin-top: 12px;">от 1 200 ₽</span>
+                    </div>
 
-        <!-- Пример 2 -->
-        <div class="dark-card" style="text-align: center; padding: 16px 12px;">
-          <div style="width: 100%; height: 180px; background: linear-gradient(145deg, #1a1228, #0e0a18); border-radius: 4px; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(201,168,76,0.2);">
-            <span class="material-symbols-outlined" style="font-size: 64px; color: var(--frost); font-variation-settings:'FILL' 0,'wght' 200,'GRAD' 0,'opsz' 64;">shield</span>
-          </div>
-          <p class="card-title">Знак Довакина</p>
-          <p class="card-body">Нагрудный амулет из серебра 925 пробы с чернением. Skyrim</p>
-          <span class="product-price-tag" style="margin-top: 12px;">от 2 800 ₽</span>
-        </div>
+                    <!-- Пример 2 -->
+                    <div class="dark-card" style="text-align: center; padding: 16px 12px;">
+                        <div style="width: 100%; height: 180px; background: linear-gradient(145deg, #1a1228, #0e0a18); border-radius: 4px; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(201,168,76,0.2);">
+                            <span class="material-symbols-outlined"
+                                  style="font-size: 64px; color: var(--frost); font-variation-settings:'FILL' 0,'wght' 200,'GRAD' 0,'opsz' 64;">shield</span>
+                        </div>
+                        <p class="card-title">Знак Довакина</p>
+                        <p class="card-body">Нагрудный амулет из серебра 925 пробы с чернением. Skyrim</p>
+                        <span class="product-price-tag" style="margin-top: 12px;">от 2 800 ₽</span>
+                    </div>
 
-        <!-- Пример 3 -->
-        <div class="dark-card" style="text-align: center; padding: 16px 12px;">
-          <div style="width: 100%; height: 180px; background: linear-gradient(145deg, #1a1228, #0e0a18); border-radius: 4px; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(201,168,76,0.2);">
-            <span class="material-symbols-outlined" style="font-size: 64px; color: var(--ember); font-variation-settings:'FILL' 0,'wght' 200,'GRAD' 0,'opsz' 64;">diamond</span>
-          </div>
-          <p class="card-title">Браслет «Тёмная Душа»</p>
-          <p class="card-body">Натуральная кожа + стальные вставки с символами солнца и тьмы</p>
-          <span class="product-price-tag" style="margin-top: 12px;">от 1 500 ₽</span>
-        </div>
-      </div>
+                    <!-- Пример 3 -->
+                    <div class="dark-card" style="text-align: center; padding: 16px 12px;">
+                        <div style="width: 100%; height: 180px; background: linear-gradient(145deg, #1a1228, #0e0a18); border-radius: 4px; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(201,168,76,0.2);">
+                            <span class="material-symbols-outlined"
+                                  style="font-size: 64px; color: var(--ember); font-variation-settings:'FILL' 0,'wght' 200,'GRAD' 0,'opsz' 64;">diamond</span>
+                        </div>
+                        <p class="card-title">Браслет «Тёмная Душа»</p>
+                        <p class="card-body">Натуральная кожа + стальные вставки с символами солнца и тьмы</p>
+                        <span class="product-price-tag" style="margin-top: 12px;">от 1 500 ₽</span>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-num">06 / 07</div>
+        </section>
 
-      <p class="body-text fragment fade-up" style="margin-top: 20px; font-style: italic; font-size: 0.9rem;">
-        Больше работ — в нашем Telegram-канале и Instagram
-      </p>
-    </div>
-    <div class="slide-num">06 / 07</div>
-  </section>
+        <!-- ═══════════════════════════════════════ SLIDE 7 — ЦЕНЫ (разброс по категориям) ═══ -->
+        <section data-transition="fade">
+            <div class="bg-layer cta-bg"></div>
+            <div class="noise-overlay"></div>
+            <div class="vignette"></div>
 
-    <!-- ═══════════════════════════════════════ SLIDE 7 — ЦЕНЫ (разброс по категориям) ═══ -->
-  <section data-transition="fade">
-    <div class="bg-layer cta-bg"></div>
-    <div class="noise-overlay"></div>
-    <div class="vignette"></div>
+            <!-- Corner ornaments -->
+            <div class="corners-layer">
+                <svg class="corner-ornament tl" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 76 L4 4 L76 4" stroke="#c9a84c" stroke-width="1.5" fill="none" opacity="0.6"/>
+                    <circle cx="4" cy="4" r="3" fill="#c9a84c" opacity="0.6"/>
+                </svg>
+                <svg class="corner-ornament tr" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 76 L4 4 L76 4" stroke="#c9a84c" stroke-width="1.5" fill="none" opacity="0.6"/>
+                    <circle cx="4" cy="4" r="3" fill="#c9a84c" opacity="0.6"/>
+                </svg>
+                <svg class="corner-ornament bl" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 76 L4 4 L76 4" stroke="#c9a84c" stroke-width="1.5" fill="none" opacity="0.6"/>
+                    <circle cx="4" cy="4" r="3" fill="#c9a84c" opacity="0.6"/>
+                </svg>
+                <svg class="corner-ornament br" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 76 L4 4 L76 4" stroke="#c9a84c" stroke-width="1.5" fill="none" opacity="0.6"/>
+                    <circle cx="4" cy="4" r="3" fill="#c9a84c" opacity="0.6"/>
+                </svg>
+            </div>
 
-    <!-- Corner ornaments -->
-    <div class="corners-layer">
-    <svg class="corner-ornament tl" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M4 76 L4 4 L76 4" stroke="#c9a84c" stroke-width="1.5" fill="none" opacity="0.6"/>
-      <circle cx="4" cy="4" r="3" fill="#c9a84c" opacity="0.6"/>
-    </svg>
-    <svg class="corner-ornament tr" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M4 76 L4 4 L76 4" stroke="#c9a84c" stroke-width="1.5" fill="none" opacity="0.6"/>
-      <circle cx="4" cy="4" r="3" fill="#c9a84c" opacity="0.6"/>
-    </svg>
-    <svg class="corner-ornament bl" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M4 76 L4 4 L76 4" stroke="#c9a84c" stroke-width="1.5" fill="none" opacity="0.6"/>
-      <circle cx="4" cy="4" r="3" fill="#c9a84c" opacity="0.6"/>
-    </svg>
-    <svg class="corner-ornament br" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M4 76 L4 4 L76 4" stroke="#c9a84c" stroke-width="1.5" fill="none" opacity="0.6"/>
-      <circle cx="4" cy="4" r="3" fill="#c9a84c" opacity="0.6"/>
-    </svg>
-    </div>
+            <div class="slide-inner">
+                <div class="section-label">Цены</div>
+                <h2 class="section-title fragment fade-up">Разброс цен на артефакты</h2>
+                <div class="rune-divider fragment fade-in"><span class="material-symbols-outlined"
+                                                                 style="font-size:16px !important; font-variation-settings:'FILL' 0,'wght' 200,'GRAD' 0,'opsz' 20;">toll</span>
+                </div>
 
-    <div class="slide-inner">
-      <div class="section-label">Цены</div>
-      <h2 class="section-title fragment fade-up">Разброс цен на артефакты</h2>
-      <div class="rune-divider fragment fade-in"><span class="material-symbols-outlined" style="font-size:16px !important; font-variation-settings:'FILL' 0,'wght' 200,'GRAD' 0,'opsz' 20;">toll</span></div>
+                <div class="card-grid cols-3 fragment fade-up" style="max-width: 900px; margin-top: 16px;">
+                    <div class="price-card">
+                        <p class="price-tier">Значки & Патчи</p>
+                        <div class="price-amount">от 150 ₽</div>
+                        <p class="price-sub">до 500 ₽</p>
+                        <ul class="price-features">
+                            <li><span class="material-symbols-outlined">check_circle</span>Эмалированные пины</li>
+                            <li><span class="material-symbols-outlined">check_circle</span>Нашивки на одежду</li>
+                            <li><span class="material-symbols-outlined">check_circle</span>Магниты с символикой</li>
+                        </ul>
+                    </div>
+                    <div class="price-card">
+                        <p class="price-tier">Амулеты & Браслеты</p>
+                        <div class="price-amount">от 400 ₽</div>
+                        <p class="price-sub">до 1 500 ₽</p>
+                        <ul class="price-features">
+                            <li><span class="material-symbols-outlined">check_circle</span>Медальоны и подвески</li>
+                            <li><span class="material-symbols-outlined">check_circle</span>Кожаные браслеты с рунами
+                            </li>
+                            <li><span class="material-symbols-outlined">check_circle</span>Кольца и перстни</li>
+                        </ul>
+                    </div>
+                    <div class="price-card">
+                        <p class="price-tier">Фигурки & Статуэтки</p>
+                        <div class="price-amount">от 1 500 ₽</div>
+                        <p class="price-sub">до 15 000 ₽</p>
+                        <ul class="price-features">
+                            <li><span class="material-symbols-outlined">check_circle</span>Смола / металл / полистоун
+                            </li>
+                            <li><span class="material-symbols-outlined">check_circle</span>Лимитированные серии</li>
+                            <li><span class="material-symbols-outlined">check_circle</span>Ручная роспись</li>
+                        </ul>
+                    </div>
+                </div>
 
-      <div class="card-grid cols-3 fragment fade-up" style="max-width: 900px; margin-top: 16px;">
-        <div class="price-card">
-          <p class="price-tier">Значки & Патчи</p>
-          <div class="price-amount">от 150 ₽</div>
-          <p class="price-sub">до 500 ₽</p>
-          <ul class="price-features">
-            <li><span class="material-symbols-outlined">check_circle</span>Эмалированные пины</li>
-            <li><span class="material-symbols-outlined">check_circle</span>Нашивки на одежду</li>
-            <li><span class="material-symbols-outlined">check_circle</span>Магниты с символикой</li>
-          </ul>
-        </div>
-        <div class="price-card">
-          <p class="price-tier">Амулеты & Браслеты</p>
-          <div class="price-amount">от 400 ₽</div>
-          <p class="price-sub">до 1 500 ₽</p>
-          <ul class="price-features">
-            <li><span class="material-symbols-outlined">check_circle</span>Медальоны и подвески</li>
-            <li><span class="material-symbols-outlined">check_circle</span>Кожаные браслеты с рунами</li>
-            <li><span class="material-symbols-outlined">check_circle</span>Кольца и перстни</li>
-          </ul>
-        </div>
-        <div class="price-card">
-          <p class="price-tier">Фигурки & Статуэтки</p>
-          <div class="price-amount">от 1 500 ₽</div>
-          <p class="price-sub">до 15 000 ₽</p>
-          <ul class="price-features">
-            <li><span class="material-symbols-outlined">check_circle</span>Смола / металл / полистоун</li>
-            <li><span class="material-symbols-outlined">check_circle</span>Лимитированные серии</li>
-            <li><span class="material-symbols-outlined">check_circle</span>Ручная роспись</li>
-          </ul>
-        </div>
-      </div>
+                <div class="card-grid cols-2 fragment fade-up" style="max-width: 600px; margin-top: 16px;">
+                    <div class="price-card">
+                        <p class="price-tier">Тематические наборы</p>
+                        <div class="price-amount">от 2 000 ₽</div>
+                        <p class="price-sub">до 7 000 ₽</p>
+                        <ul class="price-features">
+                            <li><span class="material-symbols-outlined">check_circle</span>Подарочные боксы</li>
+                            <li><span class="material-symbols-outlined">check_circle</span>Комбо из 3-5 предметов</li>
+                        </ul>
+                    </div>
+                    <div class="price-card">
+                        <p class="price-tier">Индивидуальный заказ</p>
+                        <div class="price-amount">от 150</div>
+                        <ul class="price-features">
+                            <li><span class="material-symbols-outlined">check_circle</span>По вашему эскизу</li>
+                            <li><span class="material-symbols-outlined">check_circle</span>Уникальный прототип</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-num">07 / 07</div>
+        </section>
 
-      <div class="card-grid cols-2 fragment fade-up" style="max-width: 600px; margin-top: 16px;">
-        <div class="price-card">
-          <p class="price-tier">Тематические наборы</p>
-          <div class="price-amount">от 2 000 ₽</div>
-          <p class="price-sub">до 7 000 ₽</p>
-          <ul class="price-features">
-            <li><span class="material-symbols-outlined">check_circle</span>Подарочные боксы</li>
-            <li><span class="material-symbols-outlined">check_circle</span>Комбо из 3-5 предметов</li>
-          </ul>
-        </div>
-        <div class="price-card">
-          <p class="price-tier">Индивидуальный заказ</p>
-          <div class="price-amount">от 150</div>
-          <ul class="price-features">
-            <li><span class="material-symbols-outlined">check_circle</span>По вашему эскизу</li>
-            <li><span class="material-symbols-outlined">check_circle</span>Уникальный прототип</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="promo-banner fragment fade-up">
-        <span class="material-symbols-outlined" style="font-size:22px !important; font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 24;">local_fire_department</span>
-        <span>Акция: При заказе от 2 000 ₽ — <strong>бесплатная доставка</strong></span>
-      </div>
-
-      <div class="contact-row fragment fade-up">
-        <div class="contact-item">
-          <span class="material-symbols-outlined">language</span>
-          realmrelics.ru
-        </div>
-        <div class="contact-item">
-          <span class="material-symbols-outlined">alternate_email</span>
-          @realmrelics
-        </div>
-        <div class="contact-item">
-          <span class="material-symbols-outlined">send</span>
-          t.me/realmrelics
-        </div>
-      </div>
-    </div>
-    <div class="slide-num">07 / 07</div>
-  </section>
-
-</div><!-- /slides -->
+    </div><!-- /slides -->
 </div><!-- /reveal -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.js"></script>
 <script>
-  Reveal.initialize({
-    hash: true,
-    controls: true,
-    progress: true,
-    slideNumber: true,
-    center: false,
-    transition: 'fade',
-    transitionSpeed: 'slow',
-    backgroundTransition: 'fade',
-    margin: 0,
-    minScale: 1.0,
-    maxScale: 2.0,
-    fragments: true,
-    fragmentInURL: false,
-    autoAnimate: true,
-  });
+    Reveal.initialize({
+        hash: true,
+        controls: true,
+        progress: true,
+        center: false,
+        transition: 'fade',
+        transitionSpeed: 'slow',
+        backgroundTransition: 'fade',
+        margin: 0,
+        minScale: 1.0,
+        maxScale: 2.0,
+        fragments: true,
+        fragmentInURL: false,
+        autoAnimate: true,
+    });
 </script>
 </body>
 </html>
